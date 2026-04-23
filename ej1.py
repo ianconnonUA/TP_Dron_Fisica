@@ -9,7 +9,7 @@ paso_de_tiempo = 0.001
 gravedad = 9.81
 
 fuerza_estatica_maxima = 670000.0 # Fuerza máxima que puede generar el motor sin pasarse de la energia disponible
-# fuerza_estatica_maxima = 400.0
+fuerza_estatica_maxima = 175.0 # Maxima fuerza sin pasarse de la potencia máxima
 
 tiempo_actual = 0.0
 posicion_y = 0.0
@@ -51,7 +51,8 @@ while posicion_y < altura_objetivo and tiempo_actual < 100.0:
     historial_tiempo.append(tiempo_actual)
     historial_altura.append(posicion_y)
     historial_velocidad.append(velocidad_y)
-    historial_potencia.append(min(potencia_instantanea, potencia_maxima))
+    # historial_potencia.append(min(potencia_instantanea, potencia_maxima))
+    historial_potencia.append(potencia_instantanea)
     historial_energia_motor.append(trabajo_acumulado_motor)
     historial_fuerza_motor.append(fuerza_motor)
     historial_fuerza_friccion.append(fuerza_resistencia_aire)
@@ -63,6 +64,7 @@ energia_potencial = masa_dron * gravedad * posicion_y
 print(f"  Tiempo mínimo de ascenso: {tiempo_actual:.3f} s")
 print(f"  Velocidad final: {velocidad_y:.3f} m/s")
 print(f"  Energía consumida: {trabajo_acumulado_motor:.1f} / {energia_disponible_maxima} J")
+print(f"  Potencia máxima REAL utilizada: {max(historial_potencia):.1f} W")
 
 if trabajo_acumulado_motor <= energia_disponible_maxima:
     print(f"  CUMPLE restricción de energía")
